@@ -1,0 +1,121 @@
+$def with(snippet)
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>just test</title>
+<style>
+.snippet{
+	font-size:15px;
+	font-family: 'Monaco','Consolas', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono';
+}
+
+</style>
+<link rel="sytlesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/pygments/monokai.css">
+</head>
+
+<body onload="change()">
+
+<select name="theme" id="theme" onchange="change_theme(this.value)">
+      <option value="autumn">autumn</option>
+      <option value="borland">borland</option>
+      <option value="bw">bw</option>
+      <option value="colorful">colorful</option>
+      <option value="default">default</option>
+      <option value="emacs">emacs</option>
+      <option value="friendly">friendly</option>
+      <option value="fruity">fruity</option>
+      <option value="github">github</option>
+      <option value="manni">manni</option>
+      <option value="monokai" selected="selected">monokai</option>
+      <option value="murphy">murphy</option>
+      <option value="native">native</option>
+      <option value="pastie">pastie</option>
+      <option value="perldoc">perldoc</option>
+      <option value="tango">tango</option>
+      <option value="trac">trac</option>
+      <option value="vim">vim</option>
+      <option value="vs">vs</option>
+      <option value="zenburn">zenburn</option>
+</select>
+
+<select id="font-family" onchange="change_font_family(this.value)">
+	<option value="Consolas">Consolas</option>
+	<option value="Monaco" selected="selected">Monaco</option>
+	<option value="Courier">Courier</option>
+	<option value="Fixedsys">Fixedsys</option>
+	<option value="Lucida Console">Lucida Console</option>
+	<option value="Terminal">Terminal</option>
+</select>
+
+<select id="font-size" name="font-size" onchange="change_font_size(this.value)">
+	<option value="10px">10px</option>
+	<option value="12px" selected="selected">12px</option>
+	<option value="14px">14px</option>
+	<option value="16px">16px</option>
+	<option value="18px">18px</option>
+	<option value="20px">20px</option>
+</select>
+
+
+<script language="javascript">
+	//动态加载js和css文件的工具函数
+	var dynamicLoading = {
+	    css: function(path){
+			if(!path || path.length === 0){
+				throw new Error('argument "path" is required !');
+			}
+			var head = document.getElementsByTagName('head')[0];
+	        var link = document.createElement('link');
+	        link.href = path;
+	        link.rel = 'stylesheet';
+	        link.type = 'text/css';
+	        head.appendChild(link);
+	    },
+	    js: function(path){
+			if(!path || path.length === 0){
+				throw new Error('argument "path" is required !');
+			}
+			var head = document.getElementsByTagName('head')[0];
+	        var script = document.createElement('script');
+	        script.src = path;
+	        script.type = 'text/javascript';
+	        head.appendChild(script);
+	    }
+	}
+	
+	//改变主题颜色
+	function change_theme(theme){
+		dynamicLoading.css("./static/css/pygments/"+theme+".css");
+		document.getElementById("snippet").setAttribute("class", theme);
+		head.removeChild(head.lastChild);
+	}
+	
+	function change_font_size(fontsize){
+		snippet = document.getElementById("snippet");
+		snippet.style.fontSize=fontsize;
+	}
+	
+	function change_font_family(fontfamily){
+		pre = document.getElementsByTagName("pre")[0];
+		pre.style.fontFamily=fontfamily;
+	}
+	
+	function change(){
+		change_font_size("12px");
+		change_font_family("Monaco");
+		change_theme("monokai");
+	}
+	
+</script>
+
+
+<div id="snippet">
+	$:snippet
+</div>
+
+</body>
+
+</html>
